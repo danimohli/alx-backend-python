@@ -5,7 +5,7 @@ Type Checking  funct
 from typing import List, Tuple
 
 
-def zoom_array(lst: Tuple[int, ...], factor: int = 2) -> List[int]:
+def zoom_array(lst: Tuple, factor: int = 2) -> List:
     """
     zoom_array:
         - lst Argument as tuple int
@@ -13,7 +13,7 @@ def zoom_array(lst: Tuple[int, ...], factor: int = 2) -> List[int]:
         - Return: list of int
     """
 
-    zoomed_in: List[int] = [
+    zoomed_in: List = [
         item for item in lst
         for _ in range(factor)
     ]
