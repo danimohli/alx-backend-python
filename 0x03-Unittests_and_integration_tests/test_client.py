@@ -58,7 +58,8 @@ class TestGithubOrgClient(unittest.TestCase):
         - Mocks get_json to return a predefined payload.
         - Mocks _public_repos_url to return a fixed URL.
         - Asserts that public_repos returns the correct list of repo names.
-        - Verifies that get_json and _public_repos_url are called exactly once.
+        - Verifies that get_json and _public_repos_url are called exactly
+        once.
         """
         mock_payload = [
             {"name": "repo1"},
@@ -70,13 +71,15 @@ class TestGithubOrgClient(unittest.TestCase):
 
         with patch('client.GithubOrgClient._public_repos_url',
                    new_callable=unittest.mock.PropertyMock) as mock_repos_url:
-            mock_repos_url.return_value = "https://api.github.com/orgs/test_org/repos"
+            url_ = "https://api.github.com/orgs/test_org/repos"
+            mock_repos_url.return_value = url_
             client = GithubOrgClient("test_org")
 
             result = client.public_repos()
             self.assertEqual(result, expected_repos)
 
-            mock_get_json.assert_called_once_with("https://api.github.com/orgs/test_org/repos")
+            _json = "https://api.github.com/orgs/test_org/repos"
+            mock_get_json.assert_called_once_with(_json)
             mock_repos_url.assert_called_once()
 
     @parameterized.expand([
@@ -99,7 +102,8 @@ class TestGithubOrgClient(unittest.TestCase):
 
 
 @parameterized_class([
-    {"org_payload": org_payload, "repos_payload": repos_payload, "expected_repos": expected_repos, "apache2_repos": apache2_repos}
+    {"org_payload": org_payload, "repos_payload": repos_payload,
+        "expected_repos": expected_repos, "apache2_repos": apache2_repos}
 ])
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     """
