@@ -19,17 +19,16 @@ class TestGithubOrgClient(unittest.TestCase):
         ("abc",),
     ])
     @patch('client.get_json')
-    def test_org(self, org_name, mock_get_json):
+    def test_org(self, og, mock_json):
         """
         Test that GithubOrgClient.org calls get_json with the correct URL.
         """
-        mock_get_json.return_value = {"login": org_name}
-        client = GithubOrgClient(org_name)
+        mock_json.return_value = {"login": og}
+        client = GithubOrgClient(og)
         result = client.org
-        mock_get_json.assert_called_once_with(f"https://api.git\
-                                              hub.com/orgs/{org_name}")
+        mock_json.assert_called_once_with(f"https://api.github.com/orgs/{og}")
 
-        self.assertEqual(result, {"login": org_name})
+        self.assertEqual(result, {"login": og})
 
 
 if __name__ == "__main__":
