@@ -13,7 +13,6 @@ class TestGithubOrgClient(unittest.TestCase):
     """
     Test case for GithubOrgClient's org method.
     """
-
     @parameterized.expand([
         ("google",),
         ("abc",),
@@ -27,7 +26,6 @@ class TestGithubOrgClient(unittest.TestCase):
         client = GithubOrgClient(og)
         result = client.org
         mock_json.assert_called_once_with(f"https://api.github.com/orgs/{og}")
-
         self.assertEqual(result, {"login": og})
 
 
